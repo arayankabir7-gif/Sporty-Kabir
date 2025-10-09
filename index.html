@@ -8,8 +8,8 @@
   <style>
     /* ===== Reset & Basics ===== */
     :root{
-      --primary:#0b63d6; /* energetic blue */
-      --accent:#ff3b30; /* action red */
+      --primary:#0b63d6;
+      --accent:#ff3b30;
       --muted:#6b7280;
       --bg:#f8fafc;
       --card:#ffffff;
@@ -17,17 +17,42 @@
       --radius:14px;
       font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', 'Helvetica Neue', Arial;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:linear-gradient(180deg,var(--bg),#ffffff);color:#0f172a;line-height:1.45}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;}
+    body{
+      color:#0f172a;
+      line-height:1.45;
+      position:relative;
+      overflow-x:hidden;
+    }
     a{color:var(--primary);text-decoration:none}
     img{max-width:100%;display:block}
+
+    /* ===== Animated Background ===== */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://greenspace.rw/wp-content/uploads/2024/01/amahoro-stadium2-800x536.jpg') no-repeat center center/cover;
+      animation: moveBg 35s linear infinite;
+      z-index: -1;
+      opacity: 0.35;
+      filter: brightness(0.8);
+    }
+    @keyframes moveBg {
+      0% { background-position: center top; }
+      50% { background-position: center bottom; }
+      100% { background-position: center top; }
+    }
 
     /* ===== Container ===== */
     .container{width:90%;max-width:var(--maxw);margin:0 auto;padding:32px 0}
 
     /* ===== Header ===== */
-    header{background:transparent;padding:18px 0;position:sticky;top:0;z-index:60}
+    header{background:transparent;padding:18px 0;position:sticky;top:0;z-index:60;backdrop-filter:blur(10px)}
     .nav{display:flex;align-items:center;justify-content:space-between}
     .brand{display:flex;gap:12px;align-items:center}
     .logo{width:105px;height:105px;border-radius:12px;background:linear-gradient(135deg,var(--primary),#0066ff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px}
@@ -43,13 +68,13 @@
     }
 
     /* ===== Hero ===== */
-    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:36px 0}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:36px 0;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,0.4);}
     .hero-left h1{font-size:34px;margin:0 0 12px}
-    .hero-left p{color:var(--muted);margin:0 0 20px}
+    .hero-left p{color:#f3f4f6;margin:0 0 20px}
     .hero-cards{display:flex;gap:12px;flex-wrap:wrap}
-    .card{background:var(--card);padding:12px;border-radius:12px;box-shadow:0 6px 18px rgba(12,18,29,0.06)}
+    .card{background:rgba(255,255,255,0.15);padding:12px;border-radius:12px;backdrop-filter:blur(8px);color:#fff}
     .stat{font-weight:700;font-size:18px}
-    .hero-right{background:linear-gradient(180deg,#ffffff, #f3f7ff);padding:18px;border-radius:12px;text-align:center}
+    .hero-right{background:rgba(255,255,255,0.2);padding:18px;border-radius:12px;text-align:center;backdrop-filter:blur(6px)}
     .hero-right img{border-radius:8px}
 
     @media (max-width:880px){
@@ -58,14 +83,15 @@
     }
 
     /* ===== Sections ===== */
-    section{padding:36px 0}
+    section{padding:36px 0;color:#0f172a;}
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     @media (max-width:880px){.grid-3,.grid-2{grid-template-columns:1fr}}
 
     /* ===== Gallery ===== */
     .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .gallery-grid img{height:140px;object-fit:cover;border-radius:10px}
+    .gallery-grid img{height:140px;object-fit:cover;border-radius:10px;cursor:pointer;transition:transform 0.3s}
+    .gallery-grid img:hover{transform:scale(1.05)}
     @media (max-width:1100px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
     @media (max-width:700px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
 
@@ -81,17 +107,16 @@
     button{background:var(--primary);color:#fff;padding:10px 14px;border-radius:10px;border:0;font-weight:700;margin-top:10px}
 
     /* ===== Footer ===== */
-    footer{padding:28px 0;color:var(--muted);border-top:1px solid #eef2f7}
+    footer{padding:28px 0;color:var(--muted);border-top:1px solid #eef2f7;background:rgba(255,255,255,0.7);backdrop-filter:blur(6px)}
 
     /* small helpers */
     .chips{display:flex;gap:8px;flex-wrap:wrap}
     .chip{padding:8px 12px;border-radius:999px;background:#f1f5f9;font-weight:600;color:#051124}
 
     /* modal gallery */
-    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:20px}
+    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
     .modal.open{display:flex}
     .modal img{max-height:86vh;border-radius:8px}
-
   </style>
 </head>
 <body>
@@ -101,10 +126,9 @@
         <div class="logo">SportyKabir</div>
         <div>
           <div class="site-title">SportyKabir</div>
-          <div class="muted" style="font-size:25px">Kabir Sports Hub • खेलकुद प्रोफाइल</div>
+          <div class="muted" style="font-size:25px">Kabir Sports Hub 
         </div>
       </div>
-
       <nav>
         <button class="hamburger" aria-label="open menu" onclick="toggleNav()">☰</button>
         <ul id="menu">
@@ -118,46 +142,14 @@
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-left">
-        <h1>Kabir(kabiraj) — खेल  विशेषज्ञ • प्रशिक्षक • सरकारीसेवा</h1>
-        <p>म Kabir — तपाईंको स्थानीय खेलकुद विशेषज्ञ। मेरा व्यक्तिगत अनुभवहरू, फोटोहरू, र हालका समाचारहरू यहाँ पाउन सक्नुहुन्छ।</p>
-        <div class="hero-cards">
-          <div class="card">
-            <div class="stat">लामो समय</div>
-            <div class="muted"> अनुभव</div>
-          </div>
-          <div class="card">
-            <div class="stat">बिभिन्न</div>
-            <div class="muted">प्रतियोगिता</div>
-          </div>
-          <div class="card">
-            <div class="card chip">क्रिकेट • फुटबल • एथलेटिक्स</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="container hero-right" style="max-width:520px">
-        <img src="kabirajnepal.jpg.jpg" alt="profile" />
-        <h3 style="margin-top:12px">Kabir nepal (Kabiraj)</h3>
-        <p class="muted">guide turned sports enthusiast. Coaching available .</p>
-        <div style="margin-top:12px" class="chips">
-          <div class="chip">नेपाल</div>
-          <div class="chip">प्रशिक्षण</div>
-        </div>
-      </div>
-    </section>
-
     <section id="about" class="container">
       <h2>About / परिचय</h2>
       <div class="grid-2" style="align-items:center">
         <div>
           <p>म एक खेलप्रेमी व्यक्ति हुँ। खेलकुद मेरो जीवनको महत्त्वपूर्ण भाग हो। मलाई विभिन्न प्रकारका खेलहरू मनपर्छ, तर फुटबल, ब्याडमिन्टन र क्रिकेट मेरा मनपर्ने खेलहरू हुन्। यी खेलहरूले मेरो शरीरलाई तन्दुरुस्त राख्नुका साथै मनलाई पनि ताजा राख्छन्।
-            खेलकुदको शोकले मलाई केवल शारीरिक रूपमा स्वस्थ बनाएको छैन, मानसिक रूपमा पनि सुदृढ बनाएको छ। यसले मलाई समय व्यवस्थापन, परिश्रमको मूल्य र जित-हारलाई समान रूपमा स्वीकार्न सिकाएको छ।
-            भविष्यमा पनि म खेलकुदमा निरन्तर लागिरहन चाहन्छु र अरूलाई पनि खेलकुदप्रति उत्साहित बनाउन चाहन्छु।मैले धेरै प्रतियोगिता र स्थानीय क्लबहरूमा खेल्दै र प्रशिक्षण दिँदै अनुभव सँगालेको छु। यो वेबसाइटले मेरो यात्रा, उपलब्धिहरू, र तालिम सेवाहरू प्रदर्शन गर्छ।</p>
+            खेलकुदले मलाई समय व्यवस्थापन, परिश्रमको मूल्य र जित-हारलाई समान रूपमा स्वीकार्न सिकाएको छ। मैले धेरै प्रतियोगिता र स्थानीय क्लबहरूमा खेल्दै र प्रशिक्षण दिँदै अनुभव सँगालेको छु। यो वेबसाइटले मेरो यात्रा, उपलब्धिहरू, र तालिम सेवाहरू प्रदर्शन गर्छ।</p>
           <ul>
-            <li>प्रो-ट्रेनिंग सत्रहरू (आवश्यकतालाई अनुसार)</li>
+            <li>प्रो-ट्रेनिंग सत्रहरू (आवश्यकतानुसार)</li>
             <li>स्कुल र क्लबहरूको लागि वर्कशप</li>
             <li>फिटनेस र स्किल डेभलपमेन्ट</li>
           </ul>
@@ -166,7 +158,7 @@
           <div class="card">
             <h4>Key Achievements</h4>
             <p class="muted">Master in sports science TU — 2025</p>
-            <p class="muted">IT High court patan 2017— 2025</p>
+            <p class="muted">IT High court Patan — 2017–2025</p>
           </div>
         </div>
       </div>
@@ -175,14 +167,10 @@
     <section id="gallery" class="container">
       <h2>Gallery / ग्यालरी</h2>
       <div class="gallery-grid" id="galleryGrid">
-        <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="1" onclick="openModal(this.src)"/>
-        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="2" onclick="openModal(this.src)"/>
-        <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="3" onclick="openModal(this.src)"/>
-        <img src="https://images.unsplash.com/photo-1541542684-23c6f0c6b9b6?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="4" onclick="openModal(this.src)"/>
-        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="5" onclick="openModal(this.src)"/>
-        <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="6" onclick="openModal(this.src)"/>
-        <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="7" onclick="openModal(this.src)"/>
-        <img src="https://github.com/arayankabir7-gif/Sporty-Kabir/blob/main/kabirajnepal.jpg.jpg" alt="8" onclick="openModal(this.src)"/>
+        <img src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?q=80&w=800&auto=format&fit=crop" alt="1" onclick="openModal(this.src)"/>
+        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=800&auto=format&fit=crop" alt="2" onclick="openModal(this.src)"/>
+        <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=800&auto=format&fit=crop" alt="3" onclick="openModal(this.src)"/>
+        <img src="https://images.unsplash.com/photo-1541542684-23c6f0c6b9b6?q=80&w=800&auto=format&fit=crop" alt="4" onclick="openModal(this.src)"/>
       </div>
     </section>
 
@@ -214,13 +202,10 @@
           <form onsubmit="submitForm(event)">
             <label for="name">Name / नाम</label>
             <input id="name" required placeholder="तपाईंको नाम" />
-
             <label for="email">Email / इमेल</label>
             <input id="email" type="email" required placeholder="arayankabir7@gmail.com" />
-
             <label for="message">Message / सन्देश</label>
             <textarea id="message" rows="5" placeholder="तपाईंको सन्देश यहाँ" required></textarea>
-
             <button type="submit">Send Message</button>
           </form>
         </div>
@@ -229,12 +214,11 @@
             <h4>Details</h4>
             <p class="muted">Kathmandu, Nepal • +977 9803562353 • kabirajnepal.com.np</p>
             <p>Follow: <a href="#">https://www.youtube.com/@sportykabir</a> • 
-              <a href="#">Facebook/twitter</a></p>
+              <a href="#">Facebook / Twitter</a></p>
           </div>
         </div>
       </div>
     </section>
-
   </main>
 
   <footer>
@@ -246,7 +230,6 @@
     </div>
   </footer>
 
-  <!-- Modal for gallery -->
   <div id="modal" class="modal" onclick="closeModal()">
     <img id="modalImg" src="" alt="expanded" />
   </div>
@@ -265,21 +248,15 @@
       m.classList.add('open');
     }
     function closeModal(){
-      const m = document.getElementById('modal');
-      m.classList.remove('open');
+      document.getElementById('modal').classList.remove('open');
     }
 
     function submitForm(e){
       e.preventDefault();
       const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const msg = document.getElementById('message').value.trim();
-      // Simple client-side processing — replace with real endpoint when ready.
-      alert('Thank you, ' + name + '!\nYour message has been noted.\n(Replace the form handler with your server or a service like Formspree)');
+      alert('Thank you, ' + name + '! तपाईंको सन्देश प्राप्त भयो।');
       e.target.reset();
     }
   </script>
 </body>
-</html>
-
 </html>
